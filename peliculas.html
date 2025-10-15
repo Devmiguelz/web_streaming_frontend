@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas - MiStreaming</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cards.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo">🎬 MiStreaming</div>
+            <ul class="nav-links">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/peliculas.html" class="active">Películas</a></li>
+                <li><a href="/series.html">Series</a></li>
+            </ul>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar películas..." id="searchInput">
+                <button onclick="buscar()">🔍</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO -->
+    <div class="container">
+        <!-- FILTROS -->
+        <aside class="sidebar">
+            <h3>Filtros</h3>
+            
+            <div class="filter-group">
+                <label>Género</label>
+                <select id="filtroGenero" onchange="aplicarFiltros()">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Año</label>
+                <select id="filtroAño" onchange="aplicarFiltros()">
+                    <option value="">Todos</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Calidad</label>
+                <select id="filtroCalidad" onchange="aplicarFiltros()">
+                    <option value="">Todas</option>
+                    <option value="HD">HD</option>
+                    <option value="CAM">CAM</option>
+                    <option value="DVD">DVD</option>
+                    <option value="HDTV">HDTV</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Ordenar por</label>
+                <select id="ordenar" onchange="aplicarFiltros()">
+                    <option value="reciente">Más recientes</option>
+                    <option value="titulo">Título A-Z</option>
+                    <option value="año">Año</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="limpiarFiltros()">Limpiar Filtros</button>
+        </aside>
+
+        <!-- GRID DE PELÍCULAS -->
+        <main class="main-content">
+            <div class="section-header">
+                <h1>Películas</h1>
+                <p id="resultadosInfo">Cargando...</p>
+            </div>
+
+            <div class="content-grid" id="peliculasGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Cargando películas...
+                </div>
+            </div>
+
+            <!-- PAGINACIÓN -->
+            <div class="pagination" id="pagination"></div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2025 MiStreaming. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/peliculas.js"></script>
+</body>
+</html>

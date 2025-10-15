@@ -1,0 +1,367 @@
+/* DETALLE CONTAINER */
+.detalle-container {
+    padding-top: 80px;
+    min-height: 100vh;
+    position: relative;
+}
+
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50vh;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(10px) brightness(0.3);
+}
+
+.detalle-content {
+    position: relative;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 5%;
+}
+
+.detalle-main {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.poster {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+
+.info {
+    flex: 1;
+}
+
+.info h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.meta span {
+    background: rgba(255,255,255,0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.info p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #ddd;
+    margin-bottom: 2rem;
+}
+
+.details {
+    margin-bottom: 2rem;
+}
+
+.details p {
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    color: #ccc;
+}
+
+.details strong {
+    color: #e50914;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* SERVIDORES */
+.servidores-section {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.servidores-section h3 {
+    margin-bottom: 1.5rem;
+    color: #e50914;
+}
+
+.servidores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.servidor-card {
+    background: #0f0f0f;
+    padding: 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+}
+
+.servidor-card:hover {
+    border-color: #e50914;
+    transform: translateY(-2px);
+}
+
+.servidor-nombre {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.servidor-desc {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+/* TEMPORADAS */
+.temporadas-section {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.temporadas-section h3 {
+    margin-bottom: 1rem;
+    color: #e50914;
+}
+
+.temporadas-section select {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.8rem;
+    background: #0f0f0f;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+}
+
+/* EPISODIOS */
+.episodios-section {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.episodios-section h3 {
+    margin-bottom: 1.5rem;
+    color: #e50914;
+}
+
+.episodios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.episodio-card {
+    background: #0f0f0f;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.episodio-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.4);
+}
+
+.episodio-card.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.episodio-card.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.episodio-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.episodio-info {
+    padding: 1rem;
+}
+
+.episodio-numero {
+    font-size: 0.9rem;
+    color: #e50914;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.episodio-titulo {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.episodio-estado {
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.episodio-card:hover .play-icon {
+    opacity: 0.8;
+}
+
+/* REPRODUCTOR */
+.player-page {
+    background: #000;
+}
+
+.player-container {
+    padding-top: 80px;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.player-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.player-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-info {
+    margin-bottom: 2rem;
+}
+
+.player-info h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.player-info p {
+    color: #999;
+}
+
+.servidores-alternativos {
+    background: #1a1a1a;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.servidores-alternativos h3 {
+    margin-bottom: 1rem;
+    color: #e50914;
+}
+
+.servidores-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.servidor-btn {
+    padding: 0.8rem 1.5rem;
+    background: #0f0f0f;
+    border: 2px solid #333;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.servidor-btn:hover,
+.servidor-btn.active {
+    border-color: #e50914;
+    background: #e50914;
+}
+
+.episodios-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+    .detalle-main {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .poster {
+        width: 250px;
+        height: 375px;
+    }
+    
+    .info h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .detalle-content {
+        padding: 1rem 3%;
+    }
+    
+    .info h1 {
+        font-size: 2rem;
+    }
+    
+    .servidores-grid,
+    .episodios-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .episodios-nav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

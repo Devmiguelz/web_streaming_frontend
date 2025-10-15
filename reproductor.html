@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor - MiStreaming</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/player.css">
+</head>
+<body class="player-page">
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <div class="logo">🎬 MiStreaming</div>
+            <button class="btn btn-secondary" onclick="volverAtras()">← Volver</button>
+        </nav>
+    </header>
+
+    <!-- REPRODUCTOR -->
+    <div class="player-container">
+        <div class="player-wrapper">
+            <iframe id="playerFrame" 
+                    src="" 
+                    frameborder="0" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+            </iframe>
+        </div>
+
+        <!-- INFO DEL CONTENIDO -->
+        <div class="player-info">
+            <h2 id="contenidoTitulo">Cargando...</h2>
+            <p id="contenidoDetalle"></p>
+        </div>
+
+        <!-- SERVIDORES ALTERNATIVOS -->
+        <div class="servidores-alternativos">
+            <h3>Servidores Alternativos</h3>
+            <div class="servidores-list" id="servidoresList">
+                <div class="loading">Cargando servidores...</div>
+            </div>
+        </div>
+
+        <!-- NAVEGACIÓN DE EPISODIOS (Solo para series) -->
+        <div class="episodios-nav" id="episodiosNav" style="display: none;">
+            <button class="btn btn-secondary" onclick="episodioAnterior()">← Anterior</button>
+            <span id="episodioActual"></span>
+            <button class="btn btn-secondary" onclick="episodioSiguiente()">Siguiente →</button>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/player.js"></script>
+</body>
+</html>
