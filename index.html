@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Streaming - Películas y Series Online</title>
-    <link rel="stylesheet" href="css/style.scss">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/cards.css">
 </head>
-
 <body>
+    <!-- HEADER -->
     <header>
         <nav>
             <div class="logo">🎬 MiStreaming</div>
@@ -19,7 +19,7 @@
             </ul>
             <div class="search-box">
                 <input type="text" placeholder="Buscar..." id="searchInput">
-                <span>🔍</span>
+                <button onclick="buscar()">🔍</button>
             </div>
         </nav>
     </header>
@@ -27,10 +27,10 @@
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <h1 id="heroTitle">Cargando...</h1>
-            <p id="heroDescription">Cargando descripción...</p>
-            <a href="#" class="btn btn-primary" id="heroPlay">▶ Reproducir</a>
-            <a href="#" class="btn btn-secondary" id="heroInfo">ℹ Más información</a>
+            <h1 id="heroTitle">Bienvenido a MiStreaming</h1>
+            <p id="heroDescription">Miles de películas y series para disfrutar</p>
+            <a href="/peliculas.html" class="btn btn-primary">▶ Ver Películas</a>
+            <a href="/series.html" class="btn btn-secondary">📺 Ver Series</a>
         </div>
     </section>
 
@@ -63,5 +63,66 @@
     </section>
 
     <!-- FOOTER -->
-    <footer></footer>
-    
+    <footer>
+        <p>&copy; 2025 MiStreaming. Todos los derechos reservados.</p>
+        <p>Sitio web de streaming gratuito</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Cargar contenido al inicio
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarPeliculasRecientes();
+            cargarSeriesRecientes();
+        });
+
+        async function cargarPeliculasRecientes() {
+            try {
+                const response = await fetch('/api/peliculas?por_pagina=6');
+                const data = await response.json();
+                
+                const grid = document.getElementById('peliculasGrid');
+                grid.innerHTML = '';
+                
+                data.items.forEach((pelicula, index) => {
+                    grid.innerHTML += crearCard(pelicula, 'pelicula', index);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('peliculasGrid').innerHTML = 
+                    '<p style="color: #999; text-align: center;">Error al cargar películas</p>';
+            }
+        }
+
+        async function cargarSeriesRecientes() {
+            try {
+                const response = await fetch('/api/series?por_pagina=6');
+                const data = await response.json();
+                
+                const grid = document.getElementById('seriesGrid');
+                grid.innerHTML = '';
+                
+                data.items.forEach((serie, index) => {
+                    grid.innerHTML += crearCard(serie, 'serie', index);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('seriesGrid').innerHTML = 
+                    '<p style="color: #999; text-align: center;">Error al cargar series</p>';
+            }
+        }
+
+        function buscar() {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                window.location.href = `/peliculas.html?buscar=${encodeURIComponent(query)}`;
+            }
+        }
+
+        // Enter para buscar
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') buscar();
+        });
+    </script>
+</body>
+</html>
