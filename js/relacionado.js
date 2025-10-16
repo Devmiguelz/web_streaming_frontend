@@ -94,6 +94,8 @@ function crearCardRelacionado(item, tipo) {
         ? item.generos[0] 
         : 'General';
 
+    detalle = tipo === 'pelicula' ? `<span>⭐ ${calificacion}</span><span>📅 ${año}</span>` : ``;
+
     return `
         <article class="relacionado-card">
             <a class="relacionado-link" href="${url}">
@@ -111,8 +113,7 @@ function crearCardRelacionado(item, tipo) {
                 <h2 class="relacionado-titulo">${titulo}</h2>
                 <div class="relacionado-info">
                     <span class="relacionado-badge">${genero}</span>
-                    <span>⭐ ${calificacion}</span>
-                    <span>📅 ${año}</span>
+                    ${detalle}                    
                 </div>
                 <p class="relacionado-descripcion">${descripcion}</p>
             </div>
