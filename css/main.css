@@ -45,10 +45,12 @@ nav {
   border-radius: 25px;
 }
 
-.logo-text {
+.logo-text a {
   font-family: 'Poppins', sans-serif;
   letter-spacing: 1px;
   color: #9b8df5; /* puedes ajustar el color del texto */
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-links {
