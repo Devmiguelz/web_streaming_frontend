@@ -71,6 +71,17 @@
                     <div class="loading">Cargando servidores...</div>
                 </div>
             </div>
+
+            <!-- SECCIÓN DE RELACIONADOS -->
+            <div class="relacionados-section">
+                <h3>Contenido Relacionado</h3>
+                <div class="relacionados-grid" id="relacionadosGrid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Cargando contenido relacionado...
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -80,88 +91,7 @@
     </footer>
 
     <script src="js/app.js"></script>
-    <script>
-        let peliculaActual = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            
-            if (id) {
-                cargarPelicula(id);
-            } else {
-                window.location.href = '/peliculas.html';
-            }
-        });
-
-        async function cargarPelicula(id) {
-            try {
-                const response = await fetch(`/api/pelicula/${id}`);
-                peliculaActual = await response.json();
-                
-                mostrarDetalle(peliculaActual);
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al cargar la película');
-            }
-        }
-
-        function mostrarDetalle(pelicula) {
-            document.title = `${pelicula.titulo} - Cinevo`;
-            document.getElementById('titulo').textContent = pelicula.titulo;
-            document.getElementById('poster').src = pelicula.imagen;
-            document.getElementById('backdrop').style.backgroundImage = 
-                `url(${pelicula.imagen})`;
-            document.getElementById('descripcion').textContent = 
-                pelicula.descripcion || 'Sin descripción disponible';
-            document.getElementById('año').textContent = pelicula.año || '';
-            document.getElementById('duracion').textContent = pelicula.duracion || '';
-            document.getElementById('calidad').textContent = pelicula.calidad || '';
-            document.getElementById('rating').textContent = 
-                `⭐ ${pelicula.rating || 'N/A'}`;
-            document.getElementById('director').textContent = 
-                (pelicula.director || []).join(', ') || 'No disponible';
-            document.getElementById('actores').textContent = 
-                (pelicula.actores || []).slice(0, 5).join(', ') || 'No disponible';
-            document.getElementById('generos').textContent = 
-                (pelicula.generos || []).join(', ') || 'No disponible';
-            
-            // Mostrar servidores
-            const servidoresGrid = document.getElementById('servidoresGrid');
-            if (pelicula.servidores && pelicula.servidores.length > 0) {
-                servidoresGrid.innerHTML = '';
-                pelicula.servidores.forEach((servidor, index) => {
-                    servidoresGrid.innerHTML += `
-                        <div class="servidor-card" onclick="reproducirServidor(${index})">
-                            <div class="servidor-nombre">${servidor.nombre}</div>
-                            <div class="servidor-desc">${servidor.descripcion}</div>
-                        </div>
-                    `;
-                });
-            } else {
-                servidoresGrid.innerHTML = '<p>No hay servidores disponibles</p>';
-            }
-        }
-
-        function reproducir() {
-            if (peliculaActual && peliculaActual.servidores && peliculaActual.servidores.length > 0) {
-                reproducirServidor(0);
-            }
-        }
-
-        function reproducirServidor(index) {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            window.location.href = `/reproductor.html?tipo=pelicula&id=${id}&servidor=${index}`;
-        }
-
-        function verTrailer() {
-            if (peliculaActual && peliculaActual.trailer) {
-                window.open(peliculaActual.trailer, '_blank');
-            } else {
-                alert('Trailer no disponible');
-            }
-        }
-    </script>
+    <script src="js/detalle-pelicula.js"></script>
+    <script src="js/relacionado.js"></script>
 </body>
 </html>
