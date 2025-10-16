@@ -80,8 +80,8 @@ async function buscarRelacionados(generos, año, tipo, idActual) {
 
 function crearCardRelacionado(item, tipo) {
     const url = tipo === 'pelicula' 
-        ? `/pelicula.html?id=${item.id}` 
-        : `/serie.html?id=${item.id}`;
+        ? `/detalle-pelicula.html?id=${item.id}` 
+        : `/detalle-serie.html?id=${item.id}`;
     
     const imagen = item.poster || item.imagen || 'assets/images/placeholder.jpg';
     const titulo = item.titulo || item.nombre || 'Sin título';
