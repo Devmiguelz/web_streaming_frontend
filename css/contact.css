@@ -81,7 +81,7 @@ nav {
 }
 
 .search-box input {
-    background: #202020;
+    background: transparent !important;
     border: none;
     color: #fff;
     outline: none;
@@ -106,7 +106,7 @@ nav {
 .container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 120px 5% 3rem;
+    padding: 9rem 5% 3rem;
 }
 
 .section-header {
@@ -280,8 +280,12 @@ footer p {
         font-size: 0.9rem;
     }
 
+    .search-box {
+        width: 100%;
+    }
+    
     .search-box input {
-        width: 100px;
+        width: 100%;
     }
 
     .section-header h1 {

@@ -90,7 +90,7 @@ nav {
 }
 
 .search-box input {
-    background-color: #202020 !important;
+    background-color: transparent !important;
     color: white !important;
 }
 
@@ -328,6 +328,7 @@ footer p {
 @media (max-width: 1024px) {
     .container {
         flex-direction: column;
+        padding: 9rem 5% 3rem;
     }
     
     .sidebar {
@@ -350,9 +351,13 @@ footer p {
         gap: 1rem;
         font-size: 0.9rem;
     }
+
+    .search-box {
+        width: 100%;
+    }
     
     .search-box input {
-        width: 100px;
+        width: 100%;
     }
     
     .section {
