@@ -83,7 +83,7 @@ function crearCardRelacionado(item, tipo) {
         ? `/detalle-pelicula.html?id=${item.id}` 
         : `/detalle-serie.html?id=${item.id}`;
     
-    const imagen = item.poster || item.imagen || 'assets/images/placeholder.jpg';
+    const imagen = item.poster || item.imagen || 'assets/images/nodisponible.png';
     const titulo = item.titulo || item.nombre || 'Sin título';
     const descripcion = item.descripcion || item.sinopsis || 'Sin descripción disponible';
     const año = item.año || 'N/A';
@@ -107,7 +107,7 @@ function crearCardRelacionado(item, tipo) {
                 src="${imagen}" 
                 loading="lazy" 
                 alt="${titulo}"
-                onerror="this.src='assets/images/placeholder.jpg'"
+                onerror="this.src='assets/images/nodisponible.png'"
             >
             <div class="relacionado-content">
                 <h2 class="relacionado-titulo">${titulo}</h2>
