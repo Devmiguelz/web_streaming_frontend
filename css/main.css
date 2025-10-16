@@ -89,6 +89,15 @@ nav {
     font-size: 0.95rem;
 }
 
+.search-box input {
+    background-color: #202020 !important;
+    color: white !important;
+}
+
+.search-box input::placeholder {
+    color: #bbb;
+}
+
 .search-box button {
     background: transparent;
     border: none;
