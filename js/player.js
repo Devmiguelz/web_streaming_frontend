@@ -103,7 +103,6 @@ function reproducirServidor(index) {
     const servidor = servidores[index];
     const iframe = document.getElementById('playerFrame');
     
-    // Usar la URL del redirect
     if (servidor.url_redirect) {
         iframe.src = servidor.url_redirect;
     } else {
@@ -114,15 +113,12 @@ function reproducirServidor(index) {
 function cambiarServidor(index) {
     parametros.servidor = index;
     
-    // Actualizar URL
     const url = new URL(window.location);
     url.searchParams.set('servidor', index);
     window.history.pushState({}, '', url);
     
-    // Reproducir nuevo servidor
     reproducirServidor(index);
     
-    // Actualizar botones activos
     document.querySelectorAll('.servidor-btn').forEach((btn, i) => {
         btn.classList.toggle('active', i === index);
     });
@@ -138,7 +134,6 @@ function mostrarNavegacionEpisodios(temporada, episodioActual) {
     document.getElementById('episodioActual').textContent = 
         `Episodio ${numEpisodio + 1} de ${totalEpisodios}`;
     
-    // Deshabilitar botones si es necesario
     const btnAnterior = nav.querySelector('button:first-child');
     const btnSiguiente = nav.querySelector('button:last-child');
     

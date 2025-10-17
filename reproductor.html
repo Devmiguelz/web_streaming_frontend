@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/player.css">
 </head>
 <body class="player-page">
-    <!-- HEADER -->
+    
     <header>
         <nav>
             <div class="logo">
@@ -22,7 +22,6 @@
         </nav>
     </header>
 
-    <!-- REPRODUCTOR -->
     <div class="player-container">
         <div class="player-wrapper">
             <iframe id="playerFrame" 
@@ -33,13 +32,11 @@
             </iframe>
         </div>
 
-        <!-- INFO DEL CONTENIDO -->
         <div class="player-info">
             <h2 id="contenidoTitulo">Cargando...</h2>
             <p id="contenidoDetalle"></p>
         </div>
 
-        <!-- SERVIDORES ALTERNATIVOS -->
         <div class="servidores-alternativos">
             <h3>Servidores Alternativos</h3>
             <div class="servidores-list" id="servidoresList">
@@ -47,7 +44,6 @@
             </div>
         </div>
 
-        <!-- NAVEGACIÓN DE EPISODIOS (Solo para series) -->
         <div class="episodios-nav" id="episodiosNav" style="display: none;">
             <button class="btn btn-secondary" onclick="episodioAnterior()">← Anterior</button>
             <span id="episodioActual"></span>

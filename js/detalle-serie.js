@@ -38,7 +38,6 @@ function mostrarDetalle(serie) {
     document.getElementById('temporadas').textContent =
         `${temporadas.length} temporada${temporadas.length !== 1 ? 's' : ''}`;
 
-    // Llenar selector de temporadas
     const selector = document.getElementById('selectorTemporada');
     selector.innerHTML = '';
     temporadas.forEach((temp, index) => {
@@ -47,7 +46,6 @@ function mostrarDetalle(serie) {
                 `;
     });
 
-    // Mostrar primera temporada
     if (temporadas.length > 0) {
         mostrarEpisodios(0);
     }

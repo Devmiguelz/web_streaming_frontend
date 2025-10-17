@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarPelicula(id) {
     try {
-        const response = await fetch(`/api/pelicula/${id}`);
+        const response = await fetch(`${API_URL}/api/pelicula/${id}`);
         peliculaActual = await response.json();
 
         mostrarDetalle(peliculaActual);

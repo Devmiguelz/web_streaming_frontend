@@ -5,11 +5,9 @@ const submitBtn = document.getElementById('submitBtn');
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Deshabilitar botón
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando...';
 
-    // Obtener datos del formulario
     const formData = {
         nombre: document.getElementById('nombre').value,
         email: document.getElementById('email').value,
@@ -18,7 +16,6 @@ form.addEventListener('submit', async (e) => {
     };
 
     try {
-        // Aquí integrarías tu servicio de email
         const response = await fetch(`${API_URL}/api/contacto`, {
             method: 'POST',
             headers: {
@@ -46,10 +43,8 @@ function showMessage(text, type) {
     messageDiv.textContent = text;
     messageDiv.className = `message ${type} show`;
 
-    // Scroll al mensaje
     messageDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    // Ocultar después de 5 segundos
     setTimeout(() => {
         messageDiv.classList.remove('show');
     }, 5000);

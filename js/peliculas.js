@@ -8,7 +8,6 @@ let filtros = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si hay búsqueda en URL
     const busqueda = obtenerParametroURL('buscar');
     if (busqueda) {
         document.getElementById('searchInput').value = busqueda;
@@ -47,7 +46,6 @@ async function cargarPeliculas(pagina = 1) {
     paginaActual = pagina;
     
     try {
-        // Construir URL con filtros
         let url = `${API_URL}/api/peliculas?pagina=${pagina}&por_pagina=20`;
         
         if (filtros.genero) url += `&genero=${filtros.genero}`;
@@ -55,7 +53,6 @@ async function cargarPeliculas(pagina = 1) {
         if (filtros.calidad) url += `&calidad=${filtros.calidad}`;
         if (filtros.ordenar) url += `&ordenar=${filtros.ordenar}`;
         
-        // Si hay búsqueda, usar endpoint de búsqueda
         if (filtros.buscar) {
             url = `${API_URL}/api/peliculas/buscar?q=${filtros.buscar}&pagina=${pagina}`;
         }
@@ -67,7 +64,6 @@ async function cargarPeliculas(pagina = 1) {
         mostrarPaginacion(data);
         actualizarInfo(data);
         
-        // Scroll al inicio
         window.scrollTo({ top: 0, behavior: 'smooth' });
         
     } catch (error) {
@@ -138,7 +134,6 @@ function limpiarFiltros() {
         buscar: ''
     };
     
-    // Limpiar URL si hay búsqueda
     if (window.location.search) {
         window.history.pushState({}, '', window.location.pathname);
     }
@@ -158,7 +153,6 @@ function buscar() {
     }
 }
 
-// Enter para buscar
 document.getElementById('searchInput').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') buscar();
 });
