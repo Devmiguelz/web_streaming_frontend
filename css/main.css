@@ -408,6 +408,10 @@ footer p {
         flex-direction: column;
         padding: 12rem 5% 3rem;
     }
+
+    nav {
+        justify-content: center !important;
+    }
 }
 
 /* CONTENIDO RELACIONADO */

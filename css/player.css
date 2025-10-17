@@ -366,3 +366,9 @@
         gap: 1rem;
     }
 }
+
+@media (max-width: 480px) {
+    .detalle-content {
+        padding: 3rem 1rem 3%;
+    }
+}

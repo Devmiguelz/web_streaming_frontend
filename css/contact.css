@@ -323,4 +323,8 @@ footer p {
     .container {
         padding: 12rem 5% 3rem;
     }
+
+    nav {
+        justify-content: center !important;
+    }
 }

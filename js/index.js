@@ -11,8 +11,8 @@ async function cargarPeliculasRecientes() {
         const grid = document.getElementById('peliculasGrid');
         grid.innerHTML = '';
 
-        data.items.forEach((pelicula, index) => {
-            grid.innerHTML += crearCard(pelicula, 'pelicula', index);
+        data.items.forEach((pelicula) => {
+            grid.innerHTML += crearCard(pelicula, 'pelicula');
         });
     } catch (error) {
         console.error('Error:', error);
@@ -29,8 +29,8 @@ async function cargarSeriesRecientes() {
         const grid = document.getElementById('seriesGrid');
         grid.innerHTML = '';
 
-        data.items.forEach((serie, index) => {
-            grid.innerHTML += crearCard(serie, 'serie', index);
+        data.items.forEach((serie) => {
+            grid.innerHTML += crearCard(serie, 'serie');
         });
     } catch (error) {
         console.error('Error:', error);

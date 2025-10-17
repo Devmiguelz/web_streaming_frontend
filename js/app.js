@@ -19,14 +19,14 @@ const API_URL = getApiUrl();
 /**
  * Crea una card HTML para película o serie
  */
-function crearCard(item, tipo, index) {
+function crearCard(item, tipo) {
     const calidad = item.calidad ? `<div class="badge-quality">${item.calidad}</div>` : '';
     const rating = item.rating ? `<div class="rating">⭐ ${item.rating}</div>` : '';
     const badge = tipo === 'serie' ? '<div class="badge">SERIE</div>' : '';
     
     const url = tipo === 'pelicula' 
-        ? `/detalle-pelicula.html?id=${index}` 
-        : `/detalle-serie.html?id=${index}`;
+        ? `/detalle-pelicula.html?id=${item.id}` 
+        : `/detalle-serie.html?id=${item.id}`;
     
     return `
         <div class="card" onclick="window.location.href='${url}'">

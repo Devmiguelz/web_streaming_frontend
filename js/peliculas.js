@@ -81,9 +81,8 @@ function mostrarPeliculas(data) {
     }
     
     grid.innerHTML = '';
-    data.items.forEach((pelicula, index) => {
-        const indiceGlobal = (data.pagina_actual - 1) * data.items_por_pagina + index;
-        grid.innerHTML += crearCard(pelicula, 'pelicula', indiceGlobal);
+    data.items.forEach((pelicula) => {
+        grid.innerHTML += crearCard(pelicula, 'pelicula');
     });
 }
 

@@ -67,9 +67,8 @@ function mostrarSeries(data) {
     }
     
     grid.innerHTML = '';
-    data.items.forEach((serie, index) => {
-        const indiceGlobal = (data.pagina_actual - 1) * data.items_por_pagina + index;
-        grid.innerHTML += crearCard(serie, 'serie', indiceGlobal);
+    data.items.forEach((serie) => {
+        grid.innerHTML += crearCard(serie, 'serie');
     });
 }
 
