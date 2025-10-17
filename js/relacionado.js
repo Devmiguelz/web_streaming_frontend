@@ -125,7 +125,7 @@ function inicializarRelacionados() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
     
-    const esPelicula = window.location.pathname.includes('pelicula.html');
+    const esPelicula = window.location.pathname.includes('pelicula');
     const tipo = esPelicula ? 'pelicula' : 'serie';
     
     if (id) {

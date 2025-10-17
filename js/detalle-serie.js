@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarSerie(id) {
     try {
-        const response = await fetch(`/api/serie/${id}`);
+        const response = await fetch(`${API_URL}/api/serie/${id}`);
         serieActual = await response.json();
 
         mostrarDetalle(serieActual);
