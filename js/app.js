@@ -1,5 +1,20 @@
-// API Base URL
-const API_URL = window.location.origin;
+/**
+ * Detecta el entorno y retorna la URL correcta del backend
+ */
+function getApiUrl() {
+    const hostname = window.location.hostname;
+    
+    // Si estamos en localhost o 127.0.0.1 = desarrollo
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:5400';
+    }
+    
+    // Si estamos en producción = backend de Render
+    return 'https://web-streaming-backend.onrender.com';
+}
+
+// API Base URL (se ajusta automáticamente)
+const API_URL = getApiUrl();
 
 /**
  * Crea una card HTML para película o serie
