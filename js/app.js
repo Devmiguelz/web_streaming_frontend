@@ -117,3 +117,11 @@ function truncarTexto(texto, limite) {
     if (texto.length <= limite) return texto;
     return texto.substring(0, limite) + '...';
 }
+
+function toggleFiltros() {
+    const filtrosContent = document.querySelector('.filtros-content');
+    const toggleButton = document.querySelector('.filtros-toggle');
+    
+    filtrosContent.classList.toggle('active');
+    toggleButton.classList.toggle('active');
+}

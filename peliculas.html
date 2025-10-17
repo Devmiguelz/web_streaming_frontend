@@ -33,58 +33,62 @@
 
     <div class="container">
         <aside class="sidebar">
-            <h3>Filtros</h3>
-            
-            <div class="filter-group">
-                <label>Género</label>
-                <select id="filtroGenero" onchange="aplicarFiltros()">
-                    <option value="">Todos</option>
-                </select>
-            </div>
 
-            <div class="filter-group">
-                <label>Año</label>
-                <select id="filtroAño" onchange="aplicarFiltros()">
-                    <option value="">Todos</option>
-                </select>
+            <button class="filtros-toggle" onclick="toggleFiltros()">
+                <span>Filtros</span>
+                <span class="toggle-icon">▼</span>
+            </button>
+    
+            <div class="filtros-content">
+                <h3>Filtros</h3>
+    
+                <div class="filter-group">
+                    <label>Género</label>
+                    <select id="filtroGenero" onchange="aplicarFiltros()">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Año</label>
+                    <select id="filtroAño" onchange="aplicarFiltros()">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Calidad</label>
+                    <select id="filtroCalidad" onchange="aplicarFiltros()">
+                        <option value="">Todas</option>
+                        <option value="HD">HD</option>
+                        <option value="CAM">CAM</option>
+                        <option value="DVD">DVD</option>
+                        <option value="HDTV">HDTV</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Ordenar por</label>
+                    <select id="ordenar" onchange="aplicarFiltros()">
+                        <option value="reciente">Más recientes</option>
+                        <option value="titulo">Título A-Z</option>
+                        <option value="año">Año</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="limpiarFiltros()">Limpiar Filtros</button>
             </div>
-
-            <div class="filter-group">
-                <label>Calidad</label>
-                <select id="filtroCalidad" onchange="aplicarFiltros()">
-                    <option value="">Todas</option>
-                    <option value="HD">HD</option>
-                    <option value="CAM">CAM</option>
-                    <option value="DVD">DVD</option>
-                    <option value="HDTV">HDTV</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label>Ordenar por</label>
-                <select id="ordenar" onchange="aplicarFiltros()">
-                    <option value="reciente">Más recientes</option>
-                    <option value="titulo">Título A-Z</option>
-                    <option value="año">Año</option>
-                </select>
-            </div>
-
-            <button class="btn btn-primary" onclick="limpiarFiltros()">Limpiar Filtros</button>
         </aside>
-
+    
         <main class="main-content">
             <div class="section-header">
                 <h1>Películas</h1>
                 <p id="resultadosInfo">Cargando...</p>
             </div>
-
+    
             <div class="content-grid" id="peliculasGrid">
                 <div class="loading">
                     <div class="spinner"></div>
                     Cargando películas...
                 </div>
             </div>
-
+    
             <div class="pagination" id="pagination"></div>
         </main>
     </div>
