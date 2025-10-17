@@ -269,6 +269,12 @@ footer p {
 }
 
 /* RESPONSIVE */
+@media (max-width: 1024px) {
+    .container {
+        padding: 9rem 5% 3rem;
+    }
+}
+
 @media (max-width: 768px) {
     nav {
         flex-wrap: wrap;
@@ -299,6 +305,10 @@ footer p {
     .form-row {
         grid-template-columns: 1fr;
     }
+
+    .container {
+        padding: 9rem 5% 3rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -308,5 +318,9 @@ footer p {
 
     .contact-form {
         padding: 1rem;
+    }
+
+    .container {
+        padding: 12rem 5% 3rem;
     }
 }

@@ -184,6 +184,10 @@ nav {
     align-items: center;
 }
 
+.section-title h2 {
+    font-size: 1.8rem;
+}
+
 .section-header {
     margin-bottom: 2rem;
 }
@@ -367,6 +371,11 @@ footer p {
     .btn-secondary {
         margin-left: 0.5rem;
     }
+
+    .container {
+        flex-direction: column;
+        padding: 9rem 5% 3rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -385,6 +394,19 @@ footer p {
     
     .section-title {
         font-size: 1.4rem;
+    }
+
+    .section-title h2 {
+        font-size: 1.4rem;
+    }
+
+    .section-header h1 {
+        font-size: 2rem;
+    }
+
+    .container {
+        flex-direction: column;
+        padding: 12rem 5% 3rem;
     }
 }
 
