@@ -2,18 +2,18 @@ let peliculaActual = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const slug = params.get('slug');
 
-    if (id) {
-        cargarPelicula(id);
+    if (slug) {
+        cargarPelicula(slug);
     } else {
         window.location.href = '/peliculas.html';
     }
 });
 
-async function cargarPelicula(id) {
+async function cargarPelicula(slug) {
     try {
-        const response = await fetch(`${API_URL}/api/pelicula/${id}`);
+        const response = await fetch(`${API_URL}/api/pelicula/${slug}`);
         peliculaActual = await response.json();
 
         mostrarDetalle(peliculaActual);
@@ -68,8 +68,8 @@ function reproducir() {
 
 function reproducirServidor(index) {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    window.location.href = `/reproductor.html?tipo=pelicula&id=${id}&servidor=${index}`;
+    const slug = params.get('slug');
+    window.location.href = `/reproductor.html?tipo=pelicula&slug=${slug}&servidor=${index}`;
 }
 
 function verTrailer() {

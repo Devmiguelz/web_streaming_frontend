@@ -34,7 +34,7 @@ async function obtenerItemActual(itemId, tipo) {
         const response = await fetch(`${API_URL}${endpoint}`);
         const data = await response.json();
         
-        return data.find(item => item.id === itemId);
+        return data.find(item => item.slug === itemId);
     } catch (error) {
         console.error('Error obteniendo item actual:', error);
         return null;
@@ -50,7 +50,7 @@ async function buscarRelacionados(generos, año, tipo, idActual) {
         
         const relacionados = items.filter(item => {
 
-            if (item.id === idActual) return false;
+            if (item.slug === idActual) return false;
             
             const comparteGenero = generos && item.generos && 
                 generos.some(g => item.generos.includes(g));
@@ -80,8 +80,8 @@ async function buscarRelacionados(generos, año, tipo, idActual) {
 
 function crearCardRelacionado(item, tipo) {
     const url = tipo === 'pelicula' 
-        ? `/detalle-pelicula.html?id=${item.id}` 
-        : `/detalle-serie.html?id=${item.id}`;
+        ? `/detalle-pelicula.html?slug=${item.slug}` 
+        : `/detalle-serie.html?slug=${item.slug}`;
     
     const imagen = item.poster || item.imagen || 'assets/images/nodisponible.png';
     const titulo = item.titulo || item.nombre || 'Sin título';
@@ -123,13 +123,13 @@ function crearCardRelacionado(item, tipo) {
 
 function inicializarRelacionados() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
+    const slug = urlParams.get('slug');
     
     const esPelicula = window.location.pathname.includes('pelicula');
     const tipo = esPelicula ? 'pelicula' : 'serie';
     
-    if (id) {
-        cargarRelacionados(id, tipo);
+    if (slug) {
+        cargarRelacionados(slug, tipo);
     }
 }
 

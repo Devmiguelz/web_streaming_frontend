@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Obtener parámetros
     parametros = {
         tipo: obtenerParametroURL('tipo'),
-        id: obtenerParametroURL('id'),
+        slug: obtenerParametroURL('slug'),
         temporada: obtenerParametroURL('temporada'),
         episodio: obtenerParametroURL('episodio'),
         servidor: parseInt(obtenerParametroURL('servidor')) || 0
     };
     
-    if (!parametros.tipo || !parametros.id) {
+    if (!parametros.tipo || !parametros.slug) {
         alert('Error: Parámetros inválidos');
         volverAtras();
         return;
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function cargarPelicula() {
     try {
-        const response = await fetch(`${API_URL}/api/pelicula/${parametros.id}`);
+        const response = await fetch(`${API_URL}/api/pelicula/${parametros.slug}`);
         contenidoActual = await response.json();
         
         document.getElementById('contenidoTitulo').textContent = contenidoActual.titulo;
@@ -44,7 +44,7 @@ async function cargarPelicula() {
 
 async function cargarSerie() {
     try {
-        const response = await fetch(`${API_URL}/api/serie/${parametros.id}`);
+        const response = await fetch(`${API_URL}/api/serie/${parametros.slug}`);
         contenidoActual = await response.json();
         
         const temporada = contenidoActual.temporadas[parametros.temporada];
@@ -144,7 +144,7 @@ function mostrarNavegacionEpisodios(temporada, episodioActual) {
 function episodioAnterior() {
     const nuevoEpisodio = parseInt(parametros.episodio) - 1;
     if (nuevoEpisodio >= 0) {
-        window.location.href = `/reproductor.html?tipo=serie&id=${parametros.id}&temporada=${parametros.temporada}&episodio=${nuevoEpisodio}&servidor=0`;
+        window.location.href = `/reproductor.html?tipo=serie&slug=${parametros.slug}&temporada=${parametros.temporada}&episodio=${nuevoEpisodio}&servidor=0`;
     }
 }
 
@@ -153,15 +153,15 @@ function episodioSiguiente() {
     const nuevoEpisodio = parseInt(parametros.episodio) + 1;
     
     if (nuevoEpisodio < temporada.episodios.length) {
-        window.location.href = `/reproductor.html?tipo=serie&id=${parametros.id}&temporada=${parametros.temporada}&episodio=${nuevoEpisodio}&servidor=0`;
+        window.location.href = `/reproductor.html?tipo=serie&slug=${parametros.slug}&temporada=${parametros.temporada}&episodio=${nuevoEpisodio}&servidor=0`;
     }
 }
 
 function volverAtras() {
     if (parametros.tipo === 'pelicula') {
-        window.location.href = `/detalle-pelicula.html?id=${parametros.id}`;
+        window.location.href = `/detalle-pelicula.html?slug=${parametros.slug}`;
     } else if (parametros.tipo === 'serie') {
-        window.location.href = `/detalle-serie.html?id=${parametros.id}`;
+        window.location.href = `/detalle-serie.html?slug=${parametros.slug}`;
     } else {
         window.location.href = '/';
     }

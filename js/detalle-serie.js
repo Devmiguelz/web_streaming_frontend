@@ -2,18 +2,18 @@ let serieActual = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
+    const slug = params.get('slug');
 
-    if (id) {
-        cargarSerie(id);
+    if (slug) {
+        cargarSerie(slug);
     } else {
         window.location.href = '/series.html';
     }
 });
 
-async function cargarSerie(id) {
+async function cargarSerie(slug) {
     try {
-        const response = await fetch(`${API_URL}/api/serie/${id}`);
+        const response = await fetch(`${API_URL}/api/serie/${slug}`);
         serieActual = await response.json();
 
         mostrarDetalle(serieActual);
@@ -85,8 +85,8 @@ function mostrarEpisodios(temporadaIndex) {
 
 function reproducirEpisodio(temporadaIndex, episodioIndex) {
     const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    window.location.href = `/reproductor.html?tipo=serie&id=${id}&temporada=${temporadaIndex}&episodio=${episodioIndex}&servidor=0`;
+    const slug = params.get('slug');
+    window.location.href = `/reproductor.html?tipo=serie&slug=${slug}&temporada=${temporadaIndex}&episodio=${episodioIndex}&servidor=0`;
 }
 
 function verTrailer() {

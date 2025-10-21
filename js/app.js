@@ -25,8 +25,8 @@ function crearCard(item, tipo) {
     const badge = tipo === 'serie' ? '<div class="badge">SERIE</div>' : '';
     
     const url = tipo === 'pelicula' 
-        ? `/detalle-pelicula.html?id=${item.id}` 
-        : `/detalle-serie.html?id=${item.id}`;
+        ? `/detalle-pelicula.html?slug=${item.slug}` 
+        : `/detalle-serie.html?slug=${item.slug}`;
     
     return `
         <div class="card" onclick="window.location.href='${url}'">
