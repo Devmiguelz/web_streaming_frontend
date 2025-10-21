@@ -1,98 +1,202 @@
 let serieActual = null;
+let temporadasCargadas = {}; // Cache de temporadas ya cargadas
 
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
-
     if (slug) {
-        cargarSerie(slug);
+        cargarSerieBasica(slug);
     } else {
         window.location.href = '/series.html';
     }
 });
 
-async function cargarSerie(slug) {
+/**
+ * Carga la información básica de la serie (rápido: 2-3 seg)
+ */
+async function cargarSerieBasica(slug) {
     try {
         const response = await fetch(`${API_URL}/api/serie/${slug}`);
+        
+        if (!response.ok) {
+            throw new Error('Error al cargar la serie');
+        }
+        
         serieActual = await response.json();
-
-        mostrarDetalle(serieActual);
+        mostrarInfoBasica(serieActual);
+        
+        // Si hay temporadas, cargar automáticamente la primera
+        if (serieActual.temporadas && serieActual.temporadas.length > 0) {
+            cargarTemporada(slug, 1); // Cargar temporada 1 por defecto
+        }
     } catch (error) {
         console.error('Error:', error);
-        alert('Error al cargar la serie');
+        alert('Error al cargar la serie. Por favor, intenta nuevamente.');
     }
 }
 
-function mostrarDetalle(serie) {
+/**
+ * Muestra la información básica de la serie
+ */
+function mostrarInfoBasica(serie) {
     document.title = `${serie.titulo} - Cinevo`;
     document.getElementById('titulo').textContent = serie.titulo;
     document.getElementById('poster').src = serie.imagen;
-    document.getElementById('backdrop').style.backgroundImage =
-        `url(${serie.imagen})`;
-    document.getElementById('descripcion').textContent =
-        serie.descripcion || 'Sin descripción disponible';
-    document.getElementById('generos').textContent =
-        (serie.generos || []).join(', ') || 'No disponible';
-
-    const temporadas = serie.temporadas || [];
-    document.getElementById('temporadas').textContent =
-        `${temporadas.length} temporada${temporadas.length !== 1 ? 's' : ''}`;
-
+    document.getElementById('backdrop').style.backgroundImage = `url(${serie.imagen})`;
+    document.getElementById('descripcion').textContent = serie.descripcion || 'Sin descripción disponible';
+    document.getElementById('generos').textContent = (serie.generos || []).join(', ') || 'No disponible';
+    
+    // Mostrar cantidad de temporadas
+    const numTemporadas = serie.temporadas ? serie.temporadas.length : 0;
+    document.getElementById('temporadas').textContent = `${numTemporadas} temporada${numTemporadas !== 1 ? 's' : ''}`;
+    
+    // Llenar el selector de temporadas
     const selector = document.getElementById('selectorTemporada');
     selector.innerHTML = '';
-    temporadas.forEach((temp, index) => {
-        selector.innerHTML += `
-                    <option value="${index}">${temp.nombre}</option>
-                `;
-    });
-
-    if (temporadas.length > 0) {
-        mostrarEpisodios(0);
-    }
-}
-
-function cambiarTemporada() {
-    const selector = document.getElementById('selectorTemporada');
-    const index = parseInt(selector.value);
-    mostrarEpisodios(index);
-}
-
-function mostrarEpisodios(temporadaIndex) {
-    const temporada = serieActual.temporadas[temporadaIndex];
-    const grid = document.getElementById('episodiosGrid');
-
-    if (temporada && temporada.episodios && temporada.episodios.length > 0) {
-        grid.innerHTML = '';
-        temporada.episodios.forEach((episodio, epIndex) => {
-            const servidoresDisponibles = episodio.servidores && episodio.servidores.length > 0;
-            grid.innerHTML += `
-                        <div class="episodio-card ${servidoresDisponibles ? '' : 'disabled'}" 
-                             onclick="${servidoresDisponibles ? `reproducirEpisodio(${temporadaIndex}, ${epIndex})` : ''}">
-                            <img src="${episodio.imagen}" alt="${episodio.titulo}">
-                            <div class="episodio-info">
-                                <div class="episodio-numero">${episodio.numero}</div>
-                                <div class="episodio-titulo">${episodio.titulo}</div>
-                                <div class="episodio-estado">${episodio.estado || 'No disponible'}</div>
-                            </div>
-                            ${servidoresDisponibles ? '<div class="play-icon">▶</div>' : ''}
-                        </div>
-                    `;
+    
+    if (serie.temporadas && serie.temporadas.length > 0) {
+        serie.temporadas.forEach((temp, index) => {
+            selector.innerHTML += `<option value="${index + 1}">${temp.nombre}</option>`;
         });
+        selector.disabled = false;
     } else {
-        grid.innerHTML = '<p>No hay episodios disponibles</p>';
+        selector.innerHTML = '<option>No hay temporadas disponibles</option>';
+        selector.disabled = true;
     }
 }
 
-function reproducirEpisodio(temporadaIndex, episodioIndex) {
+/**
+ * Carga una temporada específica bajo demanda (30-60 seg)
+ */
+async function cargarTemporada(slug, numeroTemporada) {
+    // Si ya está cargada, mostrarla desde el cache
+    if (temporadasCargadas[numeroTemporada]) {
+        mostrarEpisodios(temporadasCargadas[numeroTemporada]);
+        return;
+    }
+    
+    const grid = document.getElementById('episodiosGrid');
+    grid.innerHTML = `
+        <div class="loading">
+            <div class="spinner"></div>
+            Cargando episodios de la temporada ${numeroTemporada}...
+        </div>
+    `;
+    
+    try {
+        const response = await fetch(`${API_URL}/api/serie/${slug}/temporada/${numeroTemporada}`);
+        
+        if (!response.ok) {
+            throw new Error('Error al cargar la temporada');
+        }
+        
+        const temporadaData = await response.json();
+        
+        // Guardar en cache
+        temporadasCargadas[numeroTemporada] = temporadaData;
+        
+        // Mostrar episodios
+        mostrarEpisodios(temporadaData);
+        
+    } catch (error) {
+        console.error('Error al cargar temporada:', error);
+        grid.innerHTML = `
+            <div class="error-message">
+                <p>Error al cargar los episodios.</p>
+                <button class="btn btn-primary" onclick="cargarTemporada('${slug}', ${numeroTemporada})">
+                    Reintentar
+                </button>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Maneja el cambio de temporada desde el selector
+ */
+function cambiarTemporada() {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
-    window.location.href = `/reproductor.html?tipo=serie&slug=${slug}&temporada=${temporadaIndex}&episodio=${episodioIndex}&servidor=0`;
+    const selector = document.getElementById('selectorTemporada');
+    const numeroTemporada = parseInt(selector.value);
+    
+    if (slug && numeroTemporada) {
+        cargarTemporada(slug, numeroTemporada);
+    }
 }
 
+/**
+ * Muestra los episodios de una temporada
+ */
+function mostrarEpisodios(temporadaData) {
+    const grid = document.getElementById('episodiosGrid');
+    
+    if (!temporadaData || !temporadaData.episodios || temporadaData.episodios.length === 0) {
+        grid.innerHTML = '<p class="no-content">No hay episodios disponibles para esta temporada.</p>';
+        return;
+    }
+    
+    grid.innerHTML = '';
+    
+    temporadaData.episodios.forEach((episodio, index) => {
+        const servidoresDisponibles = episodio.servidores && episodio.servidores.length > 0;
+        const cardClass = servidoresDisponibles ? 'episodio-card' : 'episodio-card disabled';
+        const clickHandler = servidoresDisponibles ? `reproducirEpisodio(${temporadaData.numero}, ${index})` : '';
+        
+        const card = document.createElement('div');
+        card.className = cardClass;
+        if (servidoresDisponibles) {
+            card.onclick = () => reproducirEpisodio(temporadaData.numero, index);
+        }
+        
+        card.innerHTML = `
+            <img src="${episodio.imagen || serieActual.imagen}" 
+                 alt="${episodio.titulo}"
+                 onerror="this.src='${serieActual.imagen}'">
+            <div class="episodio-info">
+                <div class="episodio-numero">E${episodio.numero}</div>
+                <div class="episodio-titulo">${episodio.titulo}</div>
+                ${episodio.descripcion ? `<div class="episodio-descripcion">${episodio.descripcion}</div>` : ''}
+                <div class="episodio-estado">${servidoresDisponibles ? 'Disponible' : 'No disponible'}</div>
+            </div>
+            ${servidoresDisponibles ? '<div class="play-icon">▶</div>' : ''}
+        `;
+        
+        grid.appendChild(card);
+    });
+}
+
+/**
+ * Reproduce un episodio específico
+ */
+function reproducirEpisodio(numeroTemporada, episodioIndex) {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+    
+    if (!slug) {
+        alert('Error: No se pudo identificar la serie.');
+        return;
+    }
+    
+    const temporadaParam = numeroTemporada;
+    
+    window.location.href = `/reproductor.html?tipo=serie&slug=${slug}&temporada=${temporadaParam}&episodio=${episodioIndex}&servidor=0`;
+}
+
+/**
+ * Abre el trailer de la serie
+ */
 function verTrailer() {
     if (serieActual && serieActual.trailer) {
         window.open(serieActual.trailer, '_blank');
     } else {
-        alert('Trailer no disponible');
+        alert('Trailer no disponible para esta serie.');
     }
+}
+
+/**
+ * Limpia el cache de temporadas (útil para refrescar datos)
+ */
+function limpiarCache() {
+    temporadasCargadas = {};
 }
