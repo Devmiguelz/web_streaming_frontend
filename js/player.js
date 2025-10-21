@@ -44,16 +44,14 @@ async function cargarPelicula() {
 
 async function cargarSerie() {
     try {
-        const response = await fetch(`${API_URL}/api/serie/${parametros.slug}`);
-        contenidoActual = await response.json();
+        const response = await fetch(`${API_URL}/api/serie/${parametros.slug}/temporada/${parametros.temporada}`);
+        temporada = await response.json();
         
-        const temporada = contenidoActual.temporadas[parametros.temporada];
+        contenidoActual = temporada;
         const episodio = temporada.episodios[parametros.episodio];
         
-        document.getElementById('contenidoTitulo').textContent = 
-            `${contenidoActual.titulo} - ${episodio.titulo}`;
-        document.getElementById('contenidoDetalle').textContent = 
-            `${temporada.nombre} | ${episodio.estado}`;
+        document.getElementById('contenidoTitulo').textContent = `${episodio.titulo}`;
+        document.getElementById('contenidoDetalle').textContent = `${temporada.temporada_numero} | ${episodio.estado}`;
         
         mostrarServidores(episodio.servidores);
         reproducirServidor(parametros.servidor);
@@ -90,7 +88,7 @@ function reproducirServidor(index) {
     if (parametros.tipo === 'pelicula') {
         servidores = contenidoActual.servidores;
     } else {
-        const temporada = contenidoActual.temporadas[parametros.temporada];
+        const temporada = contenidoActual;
         const episodio = temporada.episodios[parametros.episodio];
         servidores = episodio.servidores;
     }
@@ -149,7 +147,7 @@ function episodioAnterior() {
 }
 
 function episodioSiguiente() {
-    const temporada = contenidoActual.temporadas[parametros.temporada];
+    const temporada = contenidoActual;
     const nuevoEpisodio = parseInt(parametros.episodio) + 1;
     
     if (nuevoEpisodio < temporada.episodios.length) {

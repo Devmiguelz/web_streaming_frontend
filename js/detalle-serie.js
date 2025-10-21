@@ -1,5 +1,4 @@
 let serieActual = null;
-let temporadasCargadas = {}; // Cache de temporadas ya cargadas
 
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
@@ -69,12 +68,7 @@ function mostrarInfoBasica(serie) {
  * Carga una temporada específica bajo demanda (30-60 seg)
  */
 async function cargarTemporada(slug, numeroTemporada) {
-    // Si ya está cargada, mostrarla desde el cache
-    if (temporadasCargadas[numeroTemporada]) {
-        mostrarEpisodios(temporadasCargadas[numeroTemporada]);
-        return;
-    }
-    
+        
     const grid = document.getElementById('episodiosGrid');
     grid.innerHTML = `
         <div class="loading">
@@ -91,11 +85,7 @@ async function cargarTemporada(slug, numeroTemporada) {
         }
         
         const temporadaData = await response.json();
-        
-        // Guardar en cache
-        temporadasCargadas[numeroTemporada] = temporadaData;
-        
-        // Mostrar episodios
+                
         mostrarEpisodios(temporadaData);
         
     } catch (error) {
@@ -141,12 +131,11 @@ function mostrarEpisodios(temporadaData) {
     temporadaData.episodios.forEach((episodio, index) => {
         const servidoresDisponibles = episodio.servidores && episodio.servidores.length > 0;
         const cardClass = servidoresDisponibles ? 'episodio-card' : 'episodio-card disabled';
-        const clickHandler = servidoresDisponibles ? `reproducirEpisodio(${temporadaData.numero}, ${index})` : '';
         
         const card = document.createElement('div');
         card.className = cardClass;
         if (servidoresDisponibles) {
-            card.onclick = () => reproducirEpisodio(temporadaData.numero, index);
+            card.onclick = () => reproducirEpisodio(temporadaData.temporada_numero, index);
         }
         
         card.innerHTML = `
@@ -177,10 +166,8 @@ function reproducirEpisodio(numeroTemporada, episodioIndex) {
         alert('Error: No se pudo identificar la serie.');
         return;
     }
-    
-    const temporadaParam = numeroTemporada;
-    
-    window.location.href = `/reproductor.html?tipo=serie&slug=${slug}&temporada=${temporadaParam}&episodio=${episodioIndex}&servidor=0`;
+        
+    window.location.href = `/reproductor.html?tipo=serie&slug=${slug}&temporada=${numeroTemporada}&episodio=${episodioIndex}&servidor=0`;
 }
 
 /**
@@ -192,11 +179,4 @@ function verTrailer() {
     } else {
         alert('Trailer no disponible para esta serie.');
     }
-}
-
-/**
- * Limpia el cache de temporadas (útil para refrescar datos)
- */
-function limpiarCache() {
-    temporadasCargadas = {};
 }
